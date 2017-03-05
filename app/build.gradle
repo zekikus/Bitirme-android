@@ -1,0 +1,50 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        applicationId "com.matas.ats"
+        minSdkVersion 14
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:design:23.1.1'
+    compile('com.mikepenz:materialdrawer:5.3.4@aar') {
+        transitive = true
+    }
+
+    // icon fonts used inside the sample
+    // https://github.com/mikepenz/Android-Iconics
+    compile 'com.mikepenz:google-material-typeface:2.2.0.1@aar'
+    compile 'com.mikepenz:fontawesome-typeface:4.4.0.1@aar'
+    compile 'com.mikepenz:octicons-typeface:3.0.0.1@aar'
+    compile 'de.codecrafters.tableview:tableview:2.3.0'
+    // used to generate the Open Source section
+    // https://github.com/mikepenz/AboutLibraries
+    compile('com.mikepenz:aboutlibraries:5.7.0@aar') {
+        transitive = true
+        exclude module: "fastadapter"
+    }
+
+    //used to provide different itemAnimators for the RecyclerView
+    //https://github.com/mikepenz/ItemAnimators
+    compile 'com.mikepenz:itemanimators:0.2.4@aar'
+
+    compile 'com.loopj.android:android-async-http:1.4.9'
+
+}

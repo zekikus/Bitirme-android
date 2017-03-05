@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="126dp"
+    android:layout_marginTop="15dp"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/filter_text"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="8dp"
+        android:textColor="#9b9b9b"
+        android:textStyle="bold"
+        android:textSize="15dp"
+        android:background="@drawable/text_view_border"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/filterLine1"
+        android:orientation="horizontal">
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/filterLine2"
+        android:orientation="horizontal">
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/filterLine3"
+        android:orientation="horizontal">
+    </LinearLayout>
+
+    <Button
+        android:text="Sonuçları Göster"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#009688"
+        android:textColor="#ffffff"
+        android:textAllCaps="false"
+        android:id="@+id/filterBtn" />
+</LinearLayout>

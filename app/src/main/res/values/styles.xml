@@ -1,0 +1,81 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <style name="CustomTheme" parent="MaterialDrawerTheme">
+        <!-- ...and here we setting appcompat’s color theme attrs -->
+        <item name="colorPrimary">#F1433C</item>
+        <item name="colorPrimaryDark">#D03033</item>
+        <item name="colorAccent">#02A8F3</item>
+
+        <!-- MaterialDrawer specific values -->
+        <item name="material_drawer_background">@color/material_drawer_dark_background</item>
+        <item name="material_drawer_primary_text">@color/material_drawer_dark_primary_text</item>
+        <item name="material_drawer_secondary_text">@color/material_drawer_dark_secondary_text
+        </item>
+        <item name="material_drawer_hint_text">@color/material_drawer_dark_hint_text</item>
+        <item name="material_drawer_divider">@color/material_drawer_dark_divider</item>
+        <item name="material_drawer_selected">@color/material_drawer_dark_selected</item>
+        <item name="material_drawer_selected_text">#F1433C</item>
+        <item name="material_drawer_header_selection_text">
+            @color/material_drawer_dark_primary_text
+        </item>
+
+        <!-- CAB :D -->
+        <item name="windowActionModeOverlay">true</item>
+    </style>
+
+    <style name="CustomThemeLogin" parent="MaterialDrawerTheme.ActionBar">
+        <!-- ...and here we setting appcompat’s color theme attrs -->
+        <item name="colorPrimary">#F1433C</item>
+        <item name="colorPrimaryDark">#D03033</item>
+        <item name="colorAccent">#02A8F3</item>
+
+        <!-- MaterialDrawer specific values -->
+        <item name="material_drawer_background">@color/material_drawer_dark_background</item>
+        <item name="material_drawer_primary_text">@color/material_drawer_dark_primary_text</item>
+        <item name="material_drawer_secondary_text">@color/material_drawer_dark_secondary_text
+        </item>
+        <item name="material_drawer_hint_text">@color/material_drawer_dark_hint_text</item>
+        <item name="material_drawer_divider">@color/material_drawer_dark_divider</item>
+        <item name="material_drawer_selected">@color/material_drawer_dark_selected</item>
+        <item name="material_drawer_selected_text">#F1433C</item>
+        <item name="material_drawer_header_selection_text">
+            @color/material_drawer_dark_primary_text
+        </item>
+
+        <!-- CAB :D -->
+        <item name="windowActionModeOverlay">true</item>
+    </style>
+
+    <style name="TextLabel" parent="TextAppearance.AppCompat">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">@color/gray</item>
+        <item name="android:textSize">20sp</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">@color/colorBlueMaterial</item>
+        <item name="colorControlNormal">@color/gray</item>
+        <item name="colorControlActivated">#F1433C</item>
+    </style>
+
+    <style name="Theme.NoTitleBar.WithColoredSpinners" parent="@android:style/Theme.NoTitleBar">
+        <item name="android:spinnerItemStyle">@style/SpinnerItem</item>
+        <item name="android:spinnerDropDownItemStyle">@style/SpinnerItem.DropDownItem</item>
+    </style>
+
+    <style name="SpinnerItem" parent="@android:style/Widget.TextView.SpinnerItem">
+        <item name="android:textColor">#00FF00</item>
+    </style>
+
+    <style name="SpinnerItem.DropDownItem" parent="@android:style/Widget.DropDownItem.Spinner">
+        <item name="android:textColor">#FF0000</item>
+    </style>
+
+</resources>
