@@ -239,15 +239,20 @@ public class StokBirimFragment extends Fragment  {
                         }
                         buildListPanel(view);
                     }else {
-                        CommonMethods.makeaShortToast(rootView,"Uygun Sonuç Bulunamadı");
+                        CommonMethods.makeaShortToast(rootView,R.string.no_result);
                     }
 
                 } catch (JSONException e) {
-                    CommonMethods.makeaShortToast(rootView,"Uygun Sonuç Bulunamadı");
+                    CommonMethods.makeaShortToast(rootView,R.string.no_result);
                 }
                 bt_pb.setVisibility(View.GONE);
 
                 if(searchScreen != null) searchScreen.getBottomSheetDialog().hide();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                CommonMethods.makeaShortToast(rootView,R.string.connection_error);
             }
         });
     }
@@ -267,15 +272,20 @@ public class StokBirimFragment extends Fragment  {
                         }
                         birim.setAdapter(birimler);
                     }else {
-                        CommonMethods.makeaShortToast(rootView,"Uygun Sonuç Bulunamadı");
+                        CommonMethods.makeaShortToast(rootView,R.string.no_result);
                     }
 
                 } catch (JSONException e) {
-                    CommonMethods.makeaShortToast(rootView,"Uygun Sonuç Bulunamadı");
+                    CommonMethods.makeaShortToast(rootView,R.string.no_result);
                 }
 
                 if(birimler.getCount() != 0)
                     ll3.addView(birim,lp);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                CommonMethods.makeaShortToast(rootView,R.string.connection_error);
             }
         });
     }
@@ -293,8 +303,13 @@ public class StokBirimFragment extends Fragment  {
                         }
                         il.setAdapter(sehirler);
                     } catch (JSONException e) {
-                        CommonMethods.makeaShortToast(rootView,"Uygun Sonuç Bulunamadı");
+                        CommonMethods.makeaShortToast(rootView,R.string.no_result);
                     }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    CommonMethods.makeaShortToast(rootView,R.string.connection_error);
                 }
             });
     }
@@ -312,11 +327,12 @@ public class StokBirimFragment extends Fragment  {
                         }
                         ilce.setAdapter(ilceler);
 
-                    } catch (JSONException e) {CommonMethods.makeaShortToast(rootView,"Uygun Sonuç Bulunamadı");}
+                    } catch (JSONException e) { CommonMethods.makeaShortToast(rootView,R.string.no_result);}
                 }
+
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                    if (errorResponse != null) CommonMethods.makeaShortToast(rootView,"Uygun Sonuç Bulunamadı");
+                    CommonMethods.makeaShortToast(rootView,R.string.connection_error);
                 }
             });
     }

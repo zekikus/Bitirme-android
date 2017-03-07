@@ -7,16 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.matas.ats.R;
@@ -25,9 +21,6 @@ import com.matas.ats.adapters.CommonListener;
 import com.matas.ats.adapters.CommonMethods;
 import com.matas.ats.adapters.CommonSearchScreen;
 import com.matas.ats.models.Alarm;
-import com.matas.ats.models.Ilce;
-import com.matas.ats.models.Sehir;
-import com.matas.ats.models.Uretici;
 import com.matas.ats.network.ATSRestClient;
 
 import org.json.JSONArray;
@@ -160,7 +153,7 @@ public class AlarmFragment extends Fragment{
                     dataAdapter.add(new Alarm(sonuc.getInt("aID"),sonuc.getString("bIl"),sonuc.getString("bIlce"),sonuc.getString("bAd"),sonuc.getInt("sbID"),sonuc.getInt("sbStcID"),sonuc.getString("aTip")));
                 }
             } catch (JSONException e) {
-                Toast.makeText(getContext(),"Uygun Sonuç Bulunamadı",Toast.LENGTH_SHORT).show();
+                CommonMethods.makeaShortToast(rootView,R.string.no_result);
             }
         }
         buildListPanel(view);
@@ -190,11 +183,11 @@ public class AlarmFragment extends Fragment{
                         Log.e("Sonuc",response + "");
                         buildListPanel(view);
                     }else {
-                        CommonMethods.makeaShortToast(rootView,"Uygun Sonuç Bulunamadı");
+                        CommonMethods.makeaShortToast(rootView,R.string.no_result);
                     }
 
                 } catch (JSONException e) {
-                    CommonMethods.makeaShortToast(rootView,"Uygun Sonuç Bulunamadı");
+                    CommonMethods.makeaShortToast(rootView,R.string.no_result);
                 }
                 alarm_pb.setVisibility(View.GONE);
 
@@ -203,7 +196,7 @@ public class AlarmFragment extends Fragment{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Toast.makeText(getContext(),"Uygun Sonuç Bulunamadı",Toast.LENGTH_SHORT).show();
+                CommonMethods.makeaShortToast(rootView,R.string.connection_error);
                 alarm_pb.setVisibility(View.GONE);
             }
         });

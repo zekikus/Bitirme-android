@@ -18,6 +18,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.matas.ats.R;
 import com.matas.ats.adapters.CommonAdapter;
 import com.matas.ats.adapters.CommonListener;
+import com.matas.ats.adapters.CommonMethods;
 import com.matas.ats.adapters.CommonSearchScreen;
 import com.matas.ats.models.Kullanici;
 import com.matas.ats.network.ATSRestClient;
@@ -162,11 +163,11 @@ public class KullaniciFragment extends Fragment{
                         }
                         buildListPanel(view);
                     }else {
-                        Toast.makeText(getContext(), "Uygun Sonuç Bulunamadı", Toast.LENGTH_SHORT).show();
+                        CommonMethods.makeaShortToast(rootView,R.string.no_result);
                     }
 
                 } catch (JSONException e) {
-                    Toast.makeText(getContext(), "Uygun Sonuç Bulunamadı", Toast.LENGTH_SHORT).show();
+                    CommonMethods.makeaShortToast(rootView,R.string.no_result);
                 }
                 kullanici_pb.setVisibility(View.GONE);
 
@@ -178,10 +179,8 @@ public class KullaniciFragment extends Fragment{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-
-                if (errorResponse != null) {
-                    Toast.makeText(getContext(),"Uygun Sonuç Bulunamadı",Toast.LENGTH_SHORT).show();
-                }
+                CommonMethods.makeaShortToast(rootView,R.string.connection_error);
+                kullanici_pb.setVisibility(View.GONE);
             }
 
         });

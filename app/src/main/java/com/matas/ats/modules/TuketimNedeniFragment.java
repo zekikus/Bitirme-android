@@ -18,6 +18,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.matas.ats.R;
 import com.matas.ats.adapters.CommonAdapter;
 import com.matas.ats.adapters.CommonListener;
+import com.matas.ats.adapters.CommonMethods;
 import com.matas.ats.adapters.CommonSearchScreen;
 import com.matas.ats.models.TuketimNedeni;
 import com.matas.ats.network.ATSRestClient;
@@ -135,7 +136,7 @@ public class TuketimNedeniFragment extends Fragment{
                     dataAdapter.add(new TuketimNedeni(sonuc.getInt("id"),sonuc.getString("tanim"),sonuc.getInt("aktifMi")));
                 }
             } catch (JSONException e) {
-                Toast.makeText(getContext(),"Uygun Sonuç Bulunamadı",Toast.LENGTH_SHORT).show();
+                CommonMethods.makeaShortToast(rootView,R.string.no_result);
             }
         }
         buildListPanel(view);
@@ -161,11 +162,11 @@ public class TuketimNedeniFragment extends Fragment{
                         }
                         buildListPanel(view);
                     }else {
-                        Toast.makeText(getContext(), "Uygun Sonuç Bulunamadı", Toast.LENGTH_SHORT).show();
+                        CommonMethods.makeaShortToast(rootView,R.string.no_result);
                     }
 
                 } catch (JSONException e) {
-                    Toast.makeText(getContext(), "Uygun Sonuç Bulunamadı", Toast.LENGTH_SHORT).show();
+                    CommonMethods.makeaShortToast(rootView,R.string.no_result);
                 }
                 tuketimNedeni_pb.setVisibility(View.GONE);
 
@@ -177,10 +178,8 @@ public class TuketimNedeniFragment extends Fragment{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-
-                if (errorResponse != null) {
-                    Toast.makeText(getContext(),"Uygun Sonuç Bulunamadı",Toast.LENGTH_SHORT).show();
-                }
+                CommonMethods.makeaShortToast(rootView,R.string.connection_error);
+                tuketimNedeni_pb.setVisibility(View.GONE);
             }
 
         });

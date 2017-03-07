@@ -21,6 +21,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.matas.ats.R;
 import com.matas.ats.adapters.CommonAdapter;
 import com.matas.ats.adapters.CommonListener;
+import com.matas.ats.adapters.CommonMethods;
 import com.matas.ats.adapters.CommonSearchScreen;
 import com.matas.ats.models.Uretici;
 import com.matas.ats.network.ATSRestClient;
@@ -143,7 +144,7 @@ public class UreticiFragment extends Fragment{
                     dataAdapter.add(uretici);
                 }
             } catch (JSONException e) {
-                Toast.makeText(getContext(),"Uygun Sonuç Bulunamadı",Toast.LENGTH_SHORT).show();
+                CommonMethods.makeaShortToast(rootView,R.string.no_result);
             }
         }
         buildListPanel(view);
@@ -172,11 +173,11 @@ public class UreticiFragment extends Fragment{
                             }
                             buildListPanel(view);
                         }else {
-                            Toast.makeText(getContext(), "Uygun Sonuç Bulunamadı", Toast.LENGTH_SHORT).show();
+                            CommonMethods.makeaShortToast(rootView,R.string.no_result);
                         }
 
                     } catch (JSONException e) {
-                        Toast.makeText(getContext(), "Uygun Sonuç Bulunamadı", Toast.LENGTH_SHORT).show();
+                        CommonMethods.makeaShortToast(rootView,R.string.no_result);
                     }
                     uretici_pb.setVisibility(View.GONE);
 
@@ -188,7 +189,7 @@ public class UreticiFragment extends Fragment{
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject errorResponse) {
-                    Toast.makeText(getContext(),"Uygun Sonuç Bulunamadı",Toast.LENGTH_SHORT).show();
+                    CommonMethods.makeaShortToast(rootView,R.string.connection_error);
                     uretici_pb.setVisibility(View.GONE);
                 }
 

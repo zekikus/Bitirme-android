@@ -74,13 +74,8 @@
     <string name="error_invalid_password">Bu parola çok kısa</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">Bu alan gereklidir</string>
-    <string name="txt_tuketim_nedeni">Tüketim Nedeni</string>
-    <string name="hint_tuketim_nedeni">Tüketim Nedeni Giriniz</string>
-    <string name="txt_uretici">Üretici</string>
-    <string name="hint_uretici">Üretici Adı Giriniz</string>
-    <string name="txt_urun">Ürün</string>
-    <string name="hint_urun_no">Ürün Numarası Giriniz veya</string>
-    <string name="hint_urun_adi">Ürün Adı Giriniz</string>
+    <string name="no_result">"Uygun Sonuç Bulunamadı"</string>
+    <string name="connection_error">Ağ Bağlantısı Problemi Oluştu.Tekrar Deneyiniz!</string>
     <string name="filter_text">FİLTRELEME</string>
 
     <!-- Sabit Diziler Burada Tanımlanacak -->

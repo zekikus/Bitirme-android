@@ -149,7 +149,7 @@ public class UrunFragment extends Fragment{
                     dataAdapter.add(urun);
                 }
             } catch (JSONException e) {
-                Toast.makeText(getContext(),"Uygun Sonuç Bulunamadı",Toast.LENGTH_SHORT).show();
+                CommonMethods.makeaShortToast(rootView,R.string.no_result);
             }
         }
         buildListPanel(view);
@@ -178,11 +178,11 @@ public class UrunFragment extends Fragment{
                         buildListPanel(view);
                         Log.e("Test",response + "");
                     }else {
-                        Toast.makeText(getContext(), "Uygun Sonuç Bulunamadı", Toast.LENGTH_SHORT).show();
+                        CommonMethods.makeaShortToast(rootView,R.string.no_result);
                     }
 
                 } catch (JSONException e) {
-                    Toast.makeText(getContext(), "Uygun Sonuç Bulunamadı", Toast.LENGTH_SHORT).show();
+                    CommonMethods.makeaShortToast(rootView,R.string.no_result);
                 }
                 urun_pb.setVisibility(View.GONE);
 
@@ -194,10 +194,8 @@ public class UrunFragment extends Fragment{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-
-                if (errorResponse != null) {
-                    Toast.makeText(getContext(),"Uygun Sonuç Bulunamadı",Toast.LENGTH_SHORT).show();
-                }
+                CommonMethods.makeaShortToast(rootView,R.string.connection_error);
+                urun_pb.setVisibility(View.GONE);
             }
 
         });

@@ -111,12 +111,17 @@ public class AlarmListFragment extends Fragment{
                             }
                         }
                     }else {
-                        CommonMethods.makeaShortToast(rootView,"Uygun Sonuç Bulunamadı");
+                        CommonMethods.makeaShortToast(rootView,R.string.no_result);
                     }
 
                 } catch (JSONException e) {
-                    CommonMethods.makeaShortToast(rootView,"Uygun Sonuç Bulunamadı");
+                    CommonMethods.makeaShortToast(rootView,R.string.no_result);
                 }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                CommonMethods.makeaShortToast(rootView,R.string.connection_error);
             }
         });
     }

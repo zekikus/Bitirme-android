@@ -102,11 +102,11 @@ public class UreticiListFragment extends Fragment{
                             }
                         }
                     }else {
-                        CommonMethods.makeaShortToast(rootView,"Uygun Sonuç Bulunamadı");
+                        CommonMethods.makeaShortToast(rootView,R.string.no_result);
                     }
 
                 } catch (JSONException e) {
-                    CommonMethods.makeaShortToast(rootView,"Uygun Sonuç Bulunamadı");
+                    CommonMethods.makeaShortToast(rootView,R.string.no_result);
                 }
             }
         });

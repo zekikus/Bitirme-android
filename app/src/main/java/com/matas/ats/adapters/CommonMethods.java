@@ -1,11 +1,13 @@
 package com.matas.ats.adapters;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.Toast;
 
-import org.json.JSONArray;
+import com.matas.ats.R;
 import org.json.JSONException;
-import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by Zeki on 8.02.2017.
@@ -18,6 +20,10 @@ public class CommonMethods {
         Toast.makeText(view.getContext(),message, Toast.LENGTH_SHORT).show();
     }
 
+    public static void makeaShortToast(View view, int key){
+        Toast.makeText(view.getContext(),getString(key,view.getContext()), Toast.LENGTH_SHORT).show();
+    }
+
     public static boolean isEquals(String val,String val2){
         return val.toLowerCase().contains(val2.toLowerCase());
     }
@@ -28,5 +34,9 @@ public class CommonMethods {
                 return false;
         }
         return true;
+    }
+
+    public static String getString(int key,Context context){
+        return context.getResources().getString(key);
     }
 }

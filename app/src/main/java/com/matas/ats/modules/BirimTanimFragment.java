@@ -207,11 +207,11 @@ public class BirimTanimFragment extends Fragment{
                         }
                         buildListPanel(view);
                     }else {
-                        CommonMethods.makeaShortToast(rootView,"Uygun Sonuç Bulunamadı");
+                        CommonMethods.makeaShortToast(rootView,R.string.no_result);
                     }
 
                 } catch (JSONException e) {
-                    CommonMethods.makeaShortToast(rootView,"Uygun Sonuç Bulunamadı");
+                    CommonMethods.makeaShortToast(rootView,R.string.no_result);
                 }
                 bt_pb.setVisibility(View.GONE);
 
@@ -220,7 +220,8 @@ public class BirimTanimFragment extends Fragment{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                if (errorResponse != null) Toast.makeText(getContext(),"Uygun Sonuç Bulunamadı",Toast.LENGTH_SHORT).show();
+                CommonMethods.makeaShortToast(rootView,R.string.connection_error);
+                bt_pb.setVisibility(View.GONE);
             }
         });
     }
@@ -238,13 +239,14 @@ public class BirimTanimFragment extends Fragment{
                         }
                         il.setAdapter(sehirler);
                     } catch (JSONException e) {
-                        CommonMethods.makeaShortToast(rootView,"Uygun Sonuç Bulunamadı");
+                        CommonMethods.makeaShortToast(rootView,R.string.no_result);
                     }
                 }
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                    if (errorResponse != null) CommonMethods.makeaShortToast(rootView,"Uygun Sonuç Bulunamadı");
+                    CommonMethods.makeaShortToast(rootView,R.string.connection_error);
+                    bt_pb.setVisibility(View.GONE);
                 }
             });
     }
@@ -262,11 +264,12 @@ public class BirimTanimFragment extends Fragment{
                         }
                         ilce.setAdapter(ilceler);
 
-                    } catch (JSONException e) {CommonMethods.makeaShortToast(rootView,"Uygun Sonuç Bulunamadı");}
+                    } catch (JSONException e) { CommonMethods.makeaShortToast(rootView,R.string.no_result);}
                 }
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                    if (errorResponse != null) CommonMethods.makeaShortToast(rootView,"Uygun Sonuç Bulunamadı");
+                    CommonMethods.makeaShortToast(rootView,R.string.connection_error);
+                    bt_pb.setVisibility(View.GONE);
                 }
             });
     }
