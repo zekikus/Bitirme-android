@@ -2,6 +2,10 @@ package com.matas.ats.network;
 
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -13,24 +17,26 @@ public class ATSRestClient {
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 
-
     public static void get(Context context, String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         //fetchUserCredentials(context);
         if (params == null) {
             params = new RequestParams();
         }
+
         client.get(getAbsoluteUrl(url), params, responseHandler);
     }
 
     public static void post(Context context, String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
 
-        //fetchUserCredentials(context);
+        client.setMaxRetriesAndTimeout(1,5*1000);
+
         if (params == null) {
             params = new RequestParams();
         }
 
-        //params.put("user",USER);
         client.post(getAbsoluteUrl(url), params, responseHandler);
+
+
     }
 
     private static String getAbsoluteUrl(String relativeUrl) {

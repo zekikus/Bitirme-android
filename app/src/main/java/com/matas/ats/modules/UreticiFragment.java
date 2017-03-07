@@ -1,6 +1,9 @@
 package com.matas.ats.modules;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -26,10 +29,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.conn.ConnectTimeoutException;
 
 /**
  * Created by Zeki on 31.10.2016.
@@ -106,7 +111,8 @@ public class UreticiFragment extends Fragment{
                         @Override
                         public void onClick(View view) {
                             String sorgu = "" + uretici_ad.getText();
-                            tempFilter(sorgu,rootView);
+                            if(jsonArray != null)
+                                tempFilter(sorgu,rootView);
                         }
                     });
                     //ll = LinearLayout
@@ -148,46 +154,46 @@ public class UreticiFragment extends Fragment{
 
     public void getUretici(String sorgu, final View view) {
         uretici_pb.setVisibility(View.VISIBLE);
-        ATSRestClient.post(getContext(), "getUreticiByName/" + sorgu, null, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
-                try {
-                    Uretici uretici;
-                    jsonArray = response.getJSONArray("results");
-                    dataAdapter.clear();
+            ATSRestClient.post(getContext(), "getUreticiByName/" + sorgu, null, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
-                    if(!jsonArray.getJSONObject(0).has("result")){
-                        for (int i = 0; i < jsonArray.length(); i++){
-                            sonuc = jsonArray.getJSONObject(i);
-                            uretici = new Uretici(sonuc.getInt("id"),sonuc.getString("ad"),sonuc.getString("ulke"));
-                            dataAdapter.add(uretici);
+                    try {
+                        Uretici uretici;
+                        jsonArray = response.getJSONArray("results");
+                        dataAdapter.clear();
+
+                        if(!jsonArray.getJSONObject(0).has("result")){
+                            for (int i = 0; i < jsonArray.length(); i++){
+                                sonuc = jsonArray.getJSONObject(i);
+                                uretici = new Uretici(sonuc.getInt("id"),sonuc.getString("ad"),sonuc.getString("ulke"));
+                                dataAdapter.add(uretici);
+                            }
+                            buildListPanel(view);
+                        }else {
+                            Toast.makeText(getContext(), "Uygun Sonuç Bulunamadı", Toast.LENGTH_SHORT).show();
                         }
-                        buildListPanel(view);
-                    }else {
+
+                    } catch (JSONException e) {
                         Toast.makeText(getContext(), "Uygun Sonuç Bulunamadı", Toast.LENGTH_SHORT).show();
                     }
+                    uretici_pb.setVisibility(View.GONE);
 
-                } catch (JSONException e) {
-                    Toast.makeText(getContext(), "Uygun Sonuç Bulunamadı", Toast.LENGTH_SHORT).show();
+                    if(searchScreen != null)
+                        searchScreen.getBottomSheetDialog().hide();
+
+                    Log.e("response = ", response.toString());
                 }
-                uretici_pb.setVisibility(View.GONE);
 
-                if(searchScreen != null)
-                    searchScreen.getBottomSheetDialog().hide();
-
-                Log.e("response = ", response.toString());
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-
-                if (errorResponse != null) {
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject errorResponse) {
                     Toast.makeText(getContext(),"Uygun Sonuç Bulunamadı",Toast.LENGTH_SHORT).show();
+                    uretici_pb.setVisibility(View.GONE);
                 }
-            }
 
-        });
+            });
+
     }
 
 

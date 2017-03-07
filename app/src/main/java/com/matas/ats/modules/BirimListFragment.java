@@ -2,6 +2,7 @@ package com.matas.ats.modules;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,7 @@ public class BirimListFragment extends Fragment{
     private JSONArray jsonArray;
     private JSONObject sonuc;
     private LinearLayout ll;
-    private LinearLayout.LayoutParams lp,lp2;
+    private LinearLayout.LayoutParams lp,lp2,lp3;
     private List<LinearLayout> ll_list;
     private List<TextView> tv_list;
     private List<EditText> et_list;
@@ -79,7 +80,6 @@ public class BirimListFragment extends Fragment{
         lp.setMargins(100,0,10,0);
 
         lp2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        lp2.setMargins(0,0,50,0);
 
         birim_list = new ArrayList<BirimTanim>();
         ll_list = new ArrayList<LinearLayout>();
@@ -137,7 +137,7 @@ public class BirimListFragment extends Fragment{
 
                 try {
                     jsonArray = response.getJSONArray("results");
-                    urun_list.clear();
+                    kullanici_list.clear();
 
                     if(!jsonArray.getJSONObject(0).has("result")){
                         for (int i = 0; i < jsonArray.length(); i++){
