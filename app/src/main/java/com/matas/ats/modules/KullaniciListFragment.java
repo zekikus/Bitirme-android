@@ -15,6 +15,8 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.matas.ats.R;
 import com.matas.ats.adapters.CommonAdapter;
 import com.matas.ats.adapters.CommonMethods;
+import com.matas.ats.models.Adres;
+import com.matas.ats.models.Iletisim;
 import com.matas.ats.models.Kullanici;
 import com.matas.ats.network.ATSRestClient;
 
@@ -40,8 +42,8 @@ public class KullaniciListFragment extends Fragment{
     private List<TextView> tv_list;
     private List<EditText> et_list;
     private List<Kullanici> kullanici_list;
-    private List<Kullanici> adres_list;
-    private List<Kullanici> iletisim_list;
+    private List<Adres> adres_list;
+    private List<Iletisim> iletisim_list;
     private ListView resultView;
     private int id_val;
     private String[] col_names = {"tcNo","ad","soyad","tip","kullaniciAdi","kullaniciSifre","birimID"};
@@ -62,8 +64,8 @@ public class KullaniciListFragment extends Fragment{
     public void initInfoScreen() throws JSONException{
 
         kullanici_list = new ArrayList<Kullanici>();
-        adres_list = new ArrayList<Kullanici>();
-        iletisim_list = new ArrayList<Kullanici>();
+        adres_list = new ArrayList<Adres>();
+        iletisim_list = new ArrayList<Iletisim>();
 
         tab1 = (Button) rootView.findViewById(R.id.tab1);
         tab2 = (Button) rootView.findViewById(R.id.tab2);
@@ -117,13 +119,13 @@ public class KullaniciListFragment extends Fragment{
 
     public void buildAdresListPanel(View view){
         resultView = (ListView) view.findViewById(R.id.ortak_info_listResult);
-        CommonAdapter ortakAdapter = new CommonAdapter(getActivity(),adres_list);
+        CommonAdapter<Adres> ortakAdapter = new CommonAdapter(getActivity(),adres_list);
         resultView.setAdapter(ortakAdapter);
     }
 
     public void buildIletisimListPanel(View view){
         resultView = (ListView) view.findViewById(R.id.ortak_info_listResult);
-        CommonAdapter ortakAdapter = new CommonAdapter(getActivity(),iletisim_list);
+        CommonAdapter<Iletisim> ortakAdapter = new CommonAdapter(getActivity(),iletisim_list);
         resultView.setAdapter(ortakAdapter);
     }
 
@@ -140,7 +142,7 @@ public class KullaniciListFragment extends Fragment{
                     if(!jsonArray.getJSONObject(0).has("result")){
                         for (int i = 0; i < jsonArray.length(); i++){
                             sonuc = jsonArray.getJSONObject(i);
-                            adres_list.add(new Kullanici(sonuc.getString("il"),sonuc.getString("ilce"),sonuc.getString("acikAdres")));
+                            adres_list.add(new Adres(sonuc.getInt("id"),sonuc.getInt("kullanici_id"),sonuc.getString("il"),sonuc.getString("ilce"),sonuc.getString("acikAdres")));
                         }
                         buildAdresListPanel(view);
                     }else {
@@ -171,7 +173,7 @@ public class KullaniciListFragment extends Fragment{
                     if(!jsonArray.getJSONObject(0).has("result")){
                         for (int i = 0; i < jsonArray.length(); i++){
                             sonuc = jsonArray.getJSONObject(i);
-                            iletisim_list.add(new Kullanici(sonuc.getString("id"),sonuc.getString("tip"),sonuc.getString("deger")));
+                            iletisim_list.add(new Iletisim(sonuc.getInt("id"),sonuc.getString("tip"),sonuc.getString("deger")));
                         }
                         buildIletisimListPanel(view);
                     }else {

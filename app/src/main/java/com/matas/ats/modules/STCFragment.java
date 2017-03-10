@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.matas.ats.R;
@@ -20,7 +20,9 @@ import com.matas.ats.adapters.CommonAdapter;
 import com.matas.ats.adapters.CommonListener;
 import com.matas.ats.adapters.CommonMethods;
 import com.matas.ats.adapters.CommonSearchScreen;
-import com.matas.ats.models.Alarm;
+import com.matas.ats.models.DolapTipi;
+import com.matas.ats.models.STC;
+import com.matas.ats.models.TuketimNedeni;
 import com.matas.ats.network.ATSRestClient;
 
 import org.json.JSONArray;
@@ -36,17 +38,16 @@ import cz.msebera.android.httpclient.Header;
  * Created by Zeki on 31.10.2016.
  */
 
-public class AlarmFragment extends Fragment{
+public class STCFragment extends Fragment{
     private JSONArray jsonArray;
     private JSONObject sonuc;
     private CommonSearchScreen searchScreen;
-    private List<Alarm> dataAdapter;
+    private List<STC> dataAdapter;
     private View rootView;
     private ListView resultView;
-    private Spinner il,ilce;
     private Button listButton;
-    private ProgressBar alarm_pb;
-    private LinearLayout ll1,ll2;
+    private ProgressBar stc_pb;
+    private LinearLayout ll1;
     private LinearLayout.LayoutParams lp;
 
     @Override
@@ -55,8 +56,7 @@ public class AlarmFragment extends Fragment{
         rootView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         initialMethod();
-        try {
-            getAlarm("getAlarmByIdOrStcNo/id//stcno/",rootView);} catch (JSONException e) {e.printStackTrace();}
+        getSTC("1",rootView);
 
 
         listButton.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +64,9 @@ public class AlarmFragment extends Fragment{
             public void onClick(View view) {
                 try {
                     buildSearchPanel(inflater);
-                } catch (JSONException e) {e.printStackTrace();}
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -73,9 +75,9 @@ public class AlarmFragment extends Fragment{
 
     //Başlangıçta kullanılacak sınıfları oluştur.
     public void initialMethod(){
-        alarm_pb = (ProgressBar) rootView.findViewById(R.id.ortak_progress);
+        stc_pb = (ProgressBar) rootView.findViewById(R.id.ortak_progress);
         listButton = (Button) rootView.findViewById(R.id.ortak_listButton);
-        dataAdapter = new ArrayList<Alarm>();
+        dataAdapter = new ArrayList<STC>();
         sonuc = null;
     }
 
@@ -84,101 +86,59 @@ public class AlarmFragment extends Fragment{
         resultView = (ListView) view.findViewById(R.id.ortak_listResult);
         CommonAdapter ortakAdapter = new CommonAdapter(getActivity(),dataAdapter);
         resultView.setAdapter(ortakAdapter);
-        resultView.setOnItemClickListener(new CommonListener<Alarm>(dataAdapter,this,new AlarmListFragment()));
+        resultView.setOnItemClickListener(new CommonListener<STC>(dataAdapter,this,new STCListFragment()));
     }
 
     public void buildSearchPanel(final LayoutInflater inflater) throws JSONException {
         if(searchScreen == null){
             searchScreen = new CommonSearchScreen() {
                 @Override
-                public void buildFilterPanel() throws JSONException {
+                public void buildFilterPanel() {
                     View bottomSheetView = buildSearchScreen(inflater,rootView);
 
-                    final EditText alarm_no = new EditText(bottomSheetView.getContext());
-                    alarm_no.setBackgroundResource(R.drawable.edit_text_border);
-                    alarm_no.setTextColor(Color.BLACK);
-                    alarm_no.setHintTextColor(Color.GRAY);
-                    alarm_no.setPadding(10,5,5,5);
-                    alarm_no.setHint(" Alarm No Giriniz");
-
-                    final EditText stc_no = new EditText(bottomSheetView.getContext());
-                    stc_no.setBackgroundResource(R.drawable.edit_text_border);
-                    stc_no.setTextColor(Color.BLACK);
-                    stc_no.setHintTextColor(Color.GRAY);
-                    stc_no.setPadding(10,5,5,5);
-                    stc_no.setHint(" Sıcaklık Takip Cihazı No Giriniz");
+                    final EditText sicaklik_takip_cihazi = new EditText(bottomSheetView.getContext());
+                    sicaklik_takip_cihazi.setBackgroundResource(R.drawable.edit_text_border);
+                    sicaklik_takip_cihazi.setTextColor(Color.BLACK);
+                    sicaklik_takip_cihazi.setHintTextColor(Color.GRAY);
+                    sicaklik_takip_cihazi.setPadding(10,5,5,5);
+                    sicaklik_takip_cihazi.setHint("  STC No Giriniz...");
 
                     Button filterBtn = (Button) bottomSheetView.findViewById(R.id.filterBtn);
                     filterBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            String sorgu = "getAlarmByIdOrStcNo/id/"+alarm_no.getText()+"/stcno/"+ stc_no.getText();
-                            if (alarm_no.getText().equals("") && stc_no.getText().equals("")) {
-                                String[] myParamater = {alarm_no.getText() + "", stc_no.getText() + ""};
-                                tempFilter(myParamater, rootView);
-                            }
-                            else
-                                try {
-                                    getAlarm(sorgu,rootView);
-                                } catch (JSONException e) {}
+                            String sorgu = "" + sicaklik_takip_cihazi.getText();
+                            getSTC(sorgu,rootView);
                         }
                     });
                     //ll = LinearLayout
                     ll1 = (LinearLayout) bottomSheetView.findViewById(R.id.filterLine1);
-                    ll2 = (LinearLayout) bottomSheetView.findViewById(R.id.filterLine2);
                     lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     lp.setMargins(5,0,0,10);
-                    ll1.addView(alarm_no,lp);
-                    ll2.addView(stc_no,lp);
+                    ll1.addView(sicaklik_takip_cihazi,lp);
+
                     getBottomSheetDialog().show();
                 }
             };
-
-
-        searchScreen.buildFilterPanel();
+            searchScreen.buildFilterPanel();
         }else
             searchScreen.getBottomSheetDialog().show();
     }
 
-    public void tempFilter(String[] sorgu,View view){
-
-        alarm_pb.setVisibility(View.VISIBLE);
-        dataAdapter.clear();
-        for (int i = 0; i < jsonArray.length(); i++){
-
-            try {
-                sonuc = jsonArray.getJSONObject(i);
-                String[] response = {sonuc.getInt("aID")+"",sonuc.getInt("sbStcID") + ""};
-                if(CommonMethods.equalControl(response,sorgu)) {
-                    dataAdapter.add(new Alarm(sonuc.getInt("aID"),sonuc.getString("bIl"),sonuc.getString("bIlce"),sonuc.getString("bAd"),sonuc.getInt("sbID"),sonuc.getInt("sbStcID"),sonuc.getString("aTip")));
-                }
-            } catch (JSONException e) {
-                CommonMethods.makeaShortToast(rootView,R.string.no_result);
-            }
-        }
-        buildListPanel(view);
-        if(searchScreen != null)
-            searchScreen.getBottomSheetDialog().hide();
-        alarm_pb.setVisibility(View.GONE);
-    }
-
-    public void getAlarm(String sorgu, final View view) throws JSONException {
-        alarm_pb.setVisibility(View.VISIBLE);
-
-        ATSRestClient.post(getContext(), sorgu, null, new JsonHttpResponseHandler() {
+    public void getSTC(String sorgu, final View view) {
+        stc_pb.setVisibility(View.VISIBLE);
+        ATSRestClient.post(getContext(), "getStcById/" + sorgu, null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
                 try {
-                    Alarm alarm;
                     jsonArray = response.getJSONArray("results");
                     dataAdapter.clear();
 
                     if(!jsonArray.getJSONObject(0).has("result")){
                         for (int i = 0; i < jsonArray.length(); i++){
                             sonuc = jsonArray.getJSONObject(i);
-                            alarm = new Alarm(sonuc.getInt("aID"),sonuc.getString("bIl"),sonuc.getString("bIlce"),sonuc.getString("bAd"),sonuc.getInt("sbID"),sonuc.getInt("sbStcID"),sonuc.getString("aTip"));
-                            dataAdapter.add(alarm);
+                            dataAdapter.add(new STC(sonuc.getInt("id"), sonuc.getString("ad"), sonuc.getString("cihaz_durum"),sonuc.getInt("alarm_uret")));
                         }
                         buildListPanel(view);
                     }else {
@@ -188,17 +148,22 @@ public class AlarmFragment extends Fragment{
                 } catch (JSONException e) {
                     CommonMethods.makeaShortToast(rootView,R.string.no_result);
                 }
-                alarm_pb.setVisibility(View.GONE);
+                stc_pb.setVisibility(View.GONE);
 
-                if(searchScreen != null) searchScreen.getBottomSheetDialog().hide();
+                if(searchScreen != null)
+                    searchScreen.getBottomSheetDialog().hide();
+
+                Log.e("response = ", response.toString());
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 CommonMethods.makeaShortToast(rootView,R.string.connection_error);
-                alarm_pb.setVisibility(View.GONE);
             }
+
         });
     }
+
+
 
 }

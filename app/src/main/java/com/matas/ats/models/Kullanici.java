@@ -16,6 +16,7 @@ public class Kullanici extends CommonModul {
     private String kullaniciAdi;
     private String kullaniciSifre;
     private int birim_id;
+    private String birim_ad;
 
 
     public Kullanici(String ad,String soyad, String tip){
@@ -24,11 +25,16 @@ public class Kullanici extends CommonModul {
         this.tip = tip;
     }
 
-    public Kullanici(int id, String ad, String soyad, String tip) {
+    public Kullanici(int id, String ad, String soyad, int birim_id,String birim_ad) {
         this.id = id;
         this.ad = ad;
         this.soyad = soyad;
-        this.tip = tip;
+        this.birim_id = birim_id;
+        this.birim_ad = birim_ad;
+    }
+
+    public String getBirim_ad() {
+        return birim_ad;
     }
 
     public int getId() {
@@ -97,7 +103,7 @@ public class Kullanici extends CommonModul {
 
     @Override
     public String getDesc() {
-        return  "Tip:" + getTip();
+        return  "Sorumlu Birim Adı: " + getBirim_ad();
     }
 
     @Override

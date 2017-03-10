@@ -32,9 +32,6 @@ public class CommonListener<T extends CommonModul> implements AdapterView.OnItem
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        //HashCode'u koymamın sebebi her sınıf için ayrı casting yaparsam istediğim metodlara ulaşamıyorum.
-        //Benim burda istediğim her nesnenin id değeri hashCode metodu bütün sınıflar için ortak olduğundan
-        //Bütün sınıflarda hashCode metodunu override ederek ıd değerlerini döndürdüm.İsme takılmayın
 
         obje = list.get(i);
         Fragment mFragment = target_fragment;

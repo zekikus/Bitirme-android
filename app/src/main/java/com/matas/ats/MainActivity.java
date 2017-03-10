@@ -14,11 +14,14 @@ import android.view.View;
 
 import com.matas.ats.modules.AlarmFragment;
 import com.matas.ats.modules.BirimTanimFragment;
+import com.matas.ats.modules.DolapTipiFragment;
 import com.matas.ats.modules.KullaniciFragment;
+import com.matas.ats.modules.STCFragment;
 import com.matas.ats.modules.StokBirimFragment;
 import com.matas.ats.modules.TuketimNedeniFragment;
 import com.matas.ats.modules.UreticiFragment;
 import com.matas.ats.modules.UrunFragment;
+import com.matas.ats.modules.UrunTipiFragment;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -115,8 +118,14 @@ public class MainActivity extends AppCompatActivity {
                                 mFragment = new AlarmFragment();
                             }else if(drawerItem.getIdentifier() == 6){
                                 mFragment = new BirimTanimFragment();
+                            }else if(drawerItem.getIdentifier() == 7){
+                                mFragment = new DolapTipiFragment();
                             }else if(drawerItem.getIdentifier() == 8){
                                 mFragment = new KullaniciFragment();
+                            }else if(drawerItem.getIdentifier() == 9){
+                                mFragment = new STCFragment();
+                            }else if(drawerItem.getIdentifier() == 10){
+                                mFragment = new UrunTipiFragment();
                             }
 
                             if (mFragment != null) {

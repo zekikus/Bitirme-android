@@ -124,28 +124,6 @@ public class KullaniciFragment extends Fragment{
             searchScreen.getBottomSheetDialog().show();
     }
 
-    //En başta bütün sonuçları getirdiğimiz için tekrar database'e sorgu atmaya gerek yok
-    /*public void tempFilter(String sorgu,View view){
-
-        kullanici_pb.setVisibility(View.VISIBLE);
-        dataAdapter.clear();
-        for (int i = 0; i < jsonArray.length(); i++){
-
-            try {
-                sonuc = jsonArray.getJSONObject(i);
-                if(sonuc.getString("tcNo") == "sorgu") {
-                    dataAdapter.add(new Kullanici(sonuc.getString("kAd"),sonuc.getString("soyad"),sonuc.getString("tip")));
-                }
-            } catch (JSONException e) {
-                Toast.makeText(getContext(),"Uygun Sonuç Bulunamadı",Toast.LENGTH_SHORT).show();
-            }
-        }
-        buildListPanel(view);
-        if(searchScreen != null)
-            searchScreen.getBottomSheetDialog().hide();
-        kullanici_pb.setVisibility(View.GONE);
-    }*/
-
     public void getKullanici(String sorgu, final View view) {
         kullanici_pb.setVisibility(View.VISIBLE);
         ATSRestClient.post(getContext(), "getKullaniciByTC/" + sorgu, null, new JsonHttpResponseHandler() {
@@ -159,7 +137,7 @@ public class KullaniciFragment extends Fragment{
                     if(!jsonArray.getJSONObject(0).has("result")){
                         for (int i = 0; i < jsonArray.length(); i++){
                             sonuc = jsonArray.getJSONObject(i);
-                            dataAdapter.add(new Kullanici(sonuc.getInt("kID"),sonuc.getString("kAd"),sonuc.getString("soyad"),sonuc.getString("tip")));
+                            dataAdapter.add(new Kullanici(sonuc.getInt("kID"),sonuc.getString("kAd"),sonuc.getString("soyad"),sonuc.getInt("birimID"),sonuc.getString("ad")));
                         }
                         buildListPanel(view);
                     }else {
@@ -173,8 +151,6 @@ public class KullaniciFragment extends Fragment{
 
                 if(searchScreen != null)
                     searchScreen.getBottomSheetDialog().hide();
-
-                Log.e("response = ", response.toString());
             }
 
             @Override

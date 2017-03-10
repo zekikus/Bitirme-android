@@ -50,7 +50,7 @@ public class UreticiFragment extends Fragment{
     private View rootView;
     private ListView resultView;
     private Button listButton;
-    private ProgressBar uretici_pb;
+    private ProgressBar dolap_tipi_pb;
     private LinearLayout ll1;
     private LinearLayout.LayoutParams lp;
 
@@ -79,7 +79,7 @@ public class UreticiFragment extends Fragment{
 
     //Başlangıçta kullanılacak sınıfları oluştur.
     public void initialMethod(){
-        uretici_pb = (ProgressBar) rootView.findViewById(R.id.ortak_progress);
+        dolap_tipi_pb = (ProgressBar) rootView.findViewById(R.id.ortak_progress);
         listButton = (Button) rootView.findViewById(R.id.ortak_listButton);
         dataAdapter = new ArrayList<Uretici>();
         sonuc = null;
@@ -133,7 +133,7 @@ public class UreticiFragment extends Fragment{
     //En başta bütün sonuçları getirdiğimiz için tekrar database'e sorgu atmaya gerek yok
     public void tempFilter(String sorgu,View view){
 
-        uretici_pb.setVisibility(View.VISIBLE);
+        dolap_tipi_pb.setVisibility(View.VISIBLE);
         dataAdapter.clear();
         for (int i = 0; i < jsonArray.length(); i++){
 
@@ -150,11 +150,11 @@ public class UreticiFragment extends Fragment{
         buildListPanel(view);
         if(searchScreen != null)
             searchScreen.getBottomSheetDialog().hide();
-        uretici_pb.setVisibility(View.GONE);
+        dolap_tipi_pb.setVisibility(View.GONE);
     }
 
     public void getUretici(String sorgu, final View view) {
-        uretici_pb.setVisibility(View.VISIBLE);
+        dolap_tipi_pb.setVisibility(View.VISIBLE);
 
             ATSRestClient.post(getContext(), "getUreticiByName/" + sorgu, null, new JsonHttpResponseHandler() {
                 @Override
@@ -179,7 +179,7 @@ public class UreticiFragment extends Fragment{
                     } catch (JSONException e) {
                         CommonMethods.makeaShortToast(rootView,R.string.no_result);
                     }
-                    uretici_pb.setVisibility(View.GONE);
+                    dolap_tipi_pb.setVisibility(View.GONE);
 
                     if(searchScreen != null)
                         searchScreen.getBottomSheetDialog().hide();
@@ -190,7 +190,7 @@ public class UreticiFragment extends Fragment{
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable error, JSONObject errorResponse) {
                     CommonMethods.makeaShortToast(rootView,R.string.connection_error);
-                    uretici_pb.setVisibility(View.GONE);
+                    dolap_tipi_pb.setVisibility(View.GONE);
                 }
 
             });
