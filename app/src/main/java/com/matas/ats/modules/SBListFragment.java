@@ -145,7 +145,7 @@ public class SBListFragment extends Fragment{
                     if(!jsonArray.getJSONObject(0).has("result")){
                         for (int i = 0; i < jsonArray.length(); i++){
                             sonuc = jsonArray.getJSONObject(i);
-                            sicaklik_list.add(new Sicaklik(sonuc.getInt("id"),sonuc.getInt("sensor_id"),sonuc.getString("sicaklik_deger"),sonuc.getString("kayit_zamani"),sonuc.getString("olcum_zamani")));
+                            sicaklik_list.add(new Sicaklik(sonuc.getInt("id"),sonuc.getInt("sensor_id"),sonuc.getString("sicaklik_deger"),sonuc.getString("kayit_zamani")));
                         }
                         buildSicaklikListPanel(view);
                     }else {

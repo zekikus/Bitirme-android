@@ -26,6 +26,7 @@ import com.matas.ats.models.Ilce;
 import com.matas.ats.models.Sehir;
 import com.matas.ats.models.StokBirim;
 import com.matas.ats.network.ATSRestClient;
+import com.matas.ats.storage.SaveSharedPreferences;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,6 +57,7 @@ public class StokBirimFragment extends Fragment  {
     private ProgressBar bt_pb;
     private LinearLayout ll1,ll2,ll3;
     private LinearLayout.LayoutParams lp;
+    private SaveSharedPreferences prefs;
     private boolean isSpinnerInitial = true,isSpinnerIlceInitial = true;
 
     @Override
@@ -63,9 +65,10 @@ public class StokBirimFragment extends Fragment  {
         rootView = inflater.inflate(R.layout.activity_ortak, container, false);
         rootView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
+        prefs = new SaveSharedPreferences(this.getContext());
         initialMethod();
         try {
-            getStokBirim("getStokBirimById/1",rootView);} catch (JSONException e) {e.printStackTrace();}
+            getStokBirim("getStokBirimById/"+prefs.getUserBirimID(),rootView);} catch (JSONException e) {e.printStackTrace();}
 
 
         listButton.setOnClickListener(new View.OnClickListener() {

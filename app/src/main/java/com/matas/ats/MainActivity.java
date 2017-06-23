@@ -8,11 +8,25 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.matas.ats.adapters.CommonAdapter;
+import com.matas.ats.adapters.CommonListener;
+import com.matas.ats.adapters.CommonMethods;
+import com.matas.ats.models.Alarm;
+import com.matas.ats.models.Sicaklik;
+import com.matas.ats.models.Urun;
 import com.matas.ats.modules.AlarmFragment;
+import com.matas.ats.modules.AlarmListFragment;
+import com.matas.ats.modules.AnasayfaFragment;
 import com.matas.ats.modules.BirimTanimFragment;
 import com.matas.ats.modules.DolapTipiFragment;
 import com.matas.ats.modules.KullaniciFragment;
@@ -22,6 +36,8 @@ import com.matas.ats.modules.TuketimNedeniFragment;
 import com.matas.ats.modules.UreticiFragment;
 import com.matas.ats.modules.UrunFragment;
 import com.matas.ats.modules.UrunTipiFragment;
+import com.matas.ats.network.ATSRestClient;
+import com.matas.ats.storage.SaveSharedPreferences;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -38,17 +54,31 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 import com.mikepenz.materialize.util.UIUtils;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
+
 public class MainActivity extends AppCompatActivity {
     private static final int PROFILE_SETTING = 1;
 
     //save our header or result
     private AccountHeader headerResult = null;
     private Drawer result = null;
+    private SaveSharedPreferences prefs;
+    private View rootView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sample);
+
+        rootView = this.findViewById(android.R.id.content).getRootView();
+        prefs = new SaveSharedPreferences(getApplicationContext());
 
         // Handle Toolbar
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -56,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(R.string.drawer_item_compact_header);
 
         // Create a few sample profile
-        final IProfile profile = new ProfileDrawerItem().withName("Muhammed Akif Taş").withEmail("muhammedakiftas@gmail.com").withIcon(R.drawable.profile);
+        final IProfile profile = new ProfileDrawerItem().withName(prefs.getFullName()).withIcon(R.drawable.user);
         //final IProfile profile2 = new ProfileDrawerItem().withName("Max Muster").withEmail("max.mustermann@gmail.com").withIcon(R.drawable.profile2);
 
         // Create the AccountHeader
@@ -66,9 +96,6 @@ public class MainActivity extends AppCompatActivity {
                 .withHeaderBackground(R.drawable.header)
                 .addProfiles(
                         profile,
-                        //profile2,
-                        //don't ask but google uses 14dp for the add account icon in gmail but 20dp for the normal icons (like manage account)
-                        //new ProfileSettingDrawerItem().withName("Çıkış").withDescription("Add new GitHub Account").withIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_plus).actionBar().paddingDp(5).colorRes(R.color.material_drawer_dark_primary_text)).withIdentifier(PROFILE_SETTING)//,
                         new ProfileSettingDrawerItem().withName("Çıkış Yap").withIcon(GoogleMaterial.Icon.gmd_accounts_outline)
                 )
                 .withSavedInstance(savedInstanceState)
@@ -104,8 +131,7 @@ public class MainActivity extends AppCompatActivity {
                             FragmentManager mFragmentManager = getSupportFragmentManager();
 
                             if (drawerItem.getIdentifier() == 0) {
-                                //startSupportActionMode(new ActionBarCallBack());
-                                //findViewById(R.id.action_mode_bar).setBackgroundColor(UIUtils.getThemeColorFromAttrOrRes(MainActivity.this, R.attr.colorPrimary, R.color.material_drawer_primary));
+                                 mFragment = new AnasayfaFragment();
                             }else if (drawerItem.getIdentifier() == 1) {
                                 mFragment = new StokBirimFragment();
                             }else if (drawerItem.getIdentifier() == 2) {
@@ -130,13 +156,15 @@ public class MainActivity extends AppCompatActivity {
 
                             if (mFragment != null) {
                                 mFragmentManager.beginTransaction().replace(R.id.frame_container, mFragment).commit();
-                            }
+                            }else{
 
+                            }
                         }
 
                         if (drawerItem instanceof Nameable) {
                             toolbar.setTitle(((Nameable) drawerItem).getName().getText(MainActivity.this));
                         }
+
 
                         return false;
                     }
@@ -144,15 +172,14 @@ public class MainActivity extends AppCompatActivity {
                 .withSavedInstance(savedInstanceState)
                 .build();
 
+        Fragment mFragment = null;
+        FragmentManager mFragmentManager = getSupportFragmentManager();
+        mFragment = new AnasayfaFragment();
+        mFragmentManager.beginTransaction().replace(R.id.frame_container, mFragment).commit();
         // set the selection to the item with the identifier 5
         if (savedInstanceState == null) {
             result.setSelection(5, false);
         }
-
-        //set the back arrow in the toolbar
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setHomeButtonEnabled(false);
-
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         result.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);

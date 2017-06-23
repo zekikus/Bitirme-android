@@ -14,14 +14,12 @@ public class Sicaklik extends CommonModul{
     private int sensor_id;
     private String sicaklik_deger;
     private String kayit_zamani;
-    private String olcum_zamani;
 
-    public Sicaklik(int id, int sensor_id, String sicaklik_deger,String kayit_zamani, String olcum_zamani){
+    public Sicaklik(int id, int sensor_id, String sicaklik_deger,String kayit_zamani){
         this.id = id;
         this.sensor_id = sensor_id;
         this.sicaklik_deger = sicaklik_deger;
         this.kayit_zamani = kayit_zamani;
-        this.olcum_zamani = olcum_zamani;
     }
 
     public int getId() {
@@ -56,14 +54,6 @@ public class Sicaklik extends CommonModul{
         this.kayit_zamani = kayit_zamani;
     }
 
-    public String getOlcum_zamani() {
-        return olcum_zamani;
-    }
-
-    public void setOlcum_zamani(String olcum_zamani) {
-        this.olcum_zamani = olcum_zamani;
-    }
-
     @Override
     public String toString() {
         return getSicaklik_deger();
@@ -71,7 +61,7 @@ public class Sicaklik extends CommonModul{
 
     @Override
     public String getDesc() {
-        return "Sensör ID: " + getSensor_id() + "\nKayıt Zamanı: " + getKayit_zamani() + "\nÖlçüm Zamanı: " + getOlcum_zamani();
+        return "Sensör ID: " + getSensor_id() + "\nKayıt Zamanı: " + getKayit_zamani();
     }
 
     @Override

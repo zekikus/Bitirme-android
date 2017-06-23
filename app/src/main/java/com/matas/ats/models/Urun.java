@@ -1,6 +1,11 @@
 package com.matas.ats.models;
 
 import android.os.Bundle;
+import android.util.Log;
+
+import com.matas.ats.adapters.CommonMethods;
+
+import java.util.HashMap;
 
 /**
  * Created by Zeki on 31.10.2016.
@@ -18,6 +23,9 @@ public class Urun extends CommonModul {
     private int seans_tipi;
     private int seans_sayisi;
     private String kullanim_suresi;
+    private String stokbirim_ad;
+    private String desc;
+    private String title;
 
     public Urun(int id,String ad, String tag_id, String tanimAd, String kullanim_suresi, int doz){
         this.id = id;
@@ -26,6 +34,7 @@ public class Urun extends CommonModul {
         this.tanimAd = tanimAd;
         this.kullanim_suresi = kullanim_suresi;
         this.doz = doz;
+        setDefaultDescAndTitle();
     }
 
     public Urun(String tag_id,String ad,int doz,String kullanim_suresi){
@@ -33,12 +42,34 @@ public class Urun extends CommonModul {
         this.ad = ad;
         this.doz = doz;
         this.kullanim_suresi = kullanim_suresi;
+        setDefaultDescAndTitle();
     }
 
     public Urun(String tag_id,String ad,int doz){
         this.tag_id = tag_id;
         this.ad = ad;
         this.doz = doz;
+        setDefaultDescAndTitle();
+    }
+
+    public Urun(String stokbirim_ad,String tag_id,String ad,String kullanim_suresi){
+        this.stokbirim_ad = stokbirim_ad;
+        this.tag_id = tag_id;
+        this.ad = ad;
+        this.kullanim_suresi = kullanim_suresi;
+
+        setTitle(this.stokbirim_ad);
+        setDesc("Ad:"+ getAd() +"\nTag ID:" + getTag_id() + "\nS.K.T:" + kullanim_suresi);
+    }
+
+    public void setDefaultDescAndTitle(){
+        desc = "Ürün No : " + getTag_id() + "\n" + "S.K.T : " +
+                getKullanim_suresi() + "\nDoz Sayısı : " + getDoz();
+
+        if (getTanimAd() != null)
+            desc += "\nÜrün Tanımı : " + getTanimAd();
+
+        setTitle("Ürün Ad: "+getAd());
     }
 
     public int getId() {
@@ -123,19 +154,26 @@ public class Urun extends CommonModul {
 
     @Override
     public String getDesc() {
-        String desc = "Ürün No : " + getTag_id() + "\n" + "S.K.T : " +
-                getKullanim_suresi() + "\nDoz Sayısı : " + getDoz();
-
-        if (getTanimAd() != null)
-            desc += "\nÜrün Tanımı : " + getTanimAd();
-
         return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public void setStokbirim_ad(String stokbirim_ad) {
+        this.stokbirim_ad = stokbirim_ad;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Override
     public String getTitle() {
-        return "Ürün Ad: "+getAd();
+        return this.title;
     }
+
 
     @Override
     public Bundle getBundle() {

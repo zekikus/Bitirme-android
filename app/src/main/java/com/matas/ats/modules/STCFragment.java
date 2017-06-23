@@ -24,6 +24,7 @@ import com.matas.ats.models.DolapTipi;
 import com.matas.ats.models.STC;
 import com.matas.ats.models.TuketimNedeni;
 import com.matas.ats.network.ATSRestClient;
+import com.matas.ats.storage.SaveSharedPreferences;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,14 +50,15 @@ public class STCFragment extends Fragment{
     private ProgressBar stc_pb;
     private LinearLayout ll1;
     private LinearLayout.LayoutParams lp;
+    private SaveSharedPreferences prefs;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.activity_ortak, container, false);
         rootView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
+        prefs = new SaveSharedPreferences(this.getContext());
         initialMethod();
-        getSTC("1",rootView);
+        getSTC(prefs.getUserBirimID(),rootView);
 
 
         listButton.setOnClickListener(new View.OnClickListener() {

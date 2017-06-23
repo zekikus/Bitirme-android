@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "495941343637",
+    "firebase_url": "https://atsproject-b0860.firebaseio.com",
+    "project_id": "atsproject-b0860",
+    "storage_bucket": "atsproject-b0860.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:495941343637:android:9f6c05f3cb481d86",
+        "android_client_info": {
+          "package_name": "com.matas.ats"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "495941343637-jgapjgre2ua3e6a0l3pan9vonrmuv64e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8rkpxiOfTbsNmhee8eMX0YiMZ-FKiO_8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

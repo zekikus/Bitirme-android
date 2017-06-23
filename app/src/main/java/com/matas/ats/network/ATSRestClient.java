@@ -13,7 +13,7 @@ import com.loopj.android.http.RequestParams;
 
 public class ATSRestClient {
 
-    private static final String BASE_URL = "http://192.168.2.199/Bitirme/api/";
+    private static final String BASE_URL = "http://192.168.1.25/Bitirme/api/";
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 

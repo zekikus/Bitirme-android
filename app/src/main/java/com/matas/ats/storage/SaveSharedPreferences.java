@@ -17,6 +17,8 @@ public class SaveSharedPreferences {
     private String fullName = "fullName";
     private String userPassword = "userPassword";
     private String userEmail = "userEmail";
+    private String userBirimID = "userBirimID";
+    private String userID = "1";
 
     private String GCMRegKey = "GCMRegKey";
 
@@ -26,6 +28,13 @@ public class SaveSharedPreferences {
         this.prefsEditor = appSharedPrefs.edit();
     }
 
+    public String getUserToken() {
+        return appSharedPrefs.getString(userToken, "");
+    }
+    public void setUserToken(String value) {
+        prefsEditor.putString(userToken, value).commit();
+    }
+
     public boolean getIsUserLoggedIn() {
         return appSharedPrefs.getBoolean(isUserLoggedIn, false);
     }
@@ -33,18 +42,18 @@ public class SaveSharedPreferences {
         prefsEditor.putBoolean(isUserLoggedIn, value).commit();
     }
 
-    public boolean getUserName() {
-        return appSharedPrefs.getBoolean(userName, false);
+    public String getUserName() {
+        return appSharedPrefs.getString(userName, "");
     }
-    public void setUserName(boolean value) {
-        prefsEditor.putBoolean(userName, value).commit();
+    public void setUserName(String value) {
+        prefsEditor.putString(userName, value).commit();
     }
 
-    public boolean getFullName() {
-        return appSharedPrefs.getBoolean(fullName, false);
+    public String getFullName() {
+        return appSharedPrefs.getString(fullName, "");
     }
-    public void setFullName(boolean value) {
-        prefsEditor.putBoolean(fullName, value).commit();
+    public void setFullName(String value) {
+        prefsEditor.putString(fullName, value).commit();
     }
 
     public boolean getUserPassword() {
@@ -61,6 +70,18 @@ public class SaveSharedPreferences {
         prefsEditor.putBoolean(userEmail, value).commit();
     }
 
+    public String getUserBirimID() {
+        return appSharedPrefs.getString(userBirimID, "1");
+    }
+    public void setUserBirimID(String value) {
+        prefsEditor.putString(userBirimID, value).commit();
+    }
 
+    public String getUserID() {
+        return appSharedPrefs.getString(userID, "1");
+    }
+    public void setUserID(String value) {
+        prefsEditor.putString(userID, value).commit();
+    }
 
 }
